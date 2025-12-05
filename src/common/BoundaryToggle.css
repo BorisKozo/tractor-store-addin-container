@@ -1,0 +1,62 @@
+.BoundaryToggle {
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    z-index: 10000;
+    padding: 0.5rem 1rem;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-family: inherit;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s;
+}
+
+.BoundaryToggle:hover {
+    background-color: #555;
+}
+
+.BoundaryToggle:active {
+    background-color: #222;
+}
+
+/* Show boundaries when body has show-boundaries class */
+body.show-boundaries [data-boundary] {
+    outline: 2px solid;
+    outline-offset: 2px;
+}
+
+/* Page boundaries - more prominent and always visible using border */
+body.show-boundaries [data-boundary-page] {
+    border: 3px solid;
+    position: relative;
+    box-sizing: border-box;
+}
+
+body.show-boundaries [data-boundary='explore'] {
+    outline-color: #4caf50;
+}
+
+body.show-boundaries [data-boundary-page='explore'] {
+    border-color: #4caf50;
+}
+
+body.show-boundaries [data-boundary='checkout'] {
+    outline-color: #2196f3;
+}
+
+body.show-boundaries [data-boundary-page='checkout'] {
+    border-color: #2196f3;
+}
+
+body.show-boundaries [data-boundary='decide'] {
+    outline-color: #ff9800;
+}
+
+body.show-boundaries [data-boundary-page='decide'] {
+    border-color: #ff9800;
+}
+

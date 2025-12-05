@@ -1,0 +1,9 @@
+.PageSkeleton-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.PageSkeleton-main > * {
+  width: 100%;
+}
+
