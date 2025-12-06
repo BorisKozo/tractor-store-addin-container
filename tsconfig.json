@@ -1,83 +1,28 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
-    // Stores incremental build information to speed up future compilations.
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    // Sets the JavaScript version TypeScript compiles to.
-    // ES2020 allows features like optional chaining (?.) and nullish coalescing (??)
-    "target": "ES2020",
-    // "useDefineForClassFields": true, -> removing because we use functional Components
-
-    // Specifies available APIs:
-    // ES2020 – Modern JavaScript features, DOM – Access to browser APIs (document, fetch, etc.), DOM.Iterable – Enables iteration over DOM collections
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
-    "types": [
-      "react",
-      "react-dom"
-    ],
-    // Specifies how modules are handled.
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    // Skips type checking of .d.ts files from dependencies.
-    // Improves build performance but may hide type mismatches.
+    "types": ["vite/client"],
     "skipLibCheck": true,
+
     /* Bundler mode */
-    // Optimized module resolution for bundlers (like Vite).
-    // it is better than node for Vite
     "moduleResolution": "bundler",
-    // Allows importing .ts and .tsx files with extensions
     "allowImportingTsExtensions": true,
-    // ??? not sure if needed
-
-    // Ensures each TypeScript file is compiled separately.
-    "isolatedModules": true,
-    // Forces TypeScript to always treat the project as a module, even without import/export.
+    "verbatimModuleSyntax": false,
     "moduleDetection": "force",
-    // -> not usr if needed
-
-    // Prevents TypeScript from generating .js output files.
-    // Used in projects where a bundler (Vite) handles compilation
     "noEmit": true,
-    // Enables new JSX transform (React 17+).
-    // Eliminates the need for import React from "react" in .tsx files.
     "jsx": "react-jsx",
-    "jsxImportSource": "react",
-    /* Linting */
-    // Enables all strict type-checking rules, reducing potential errors.
-    "strict": true,
-    // Prevents unused variables in local scopes, helping clean up the code.
-    "noUnusedLocals": true,
-    // Prevents unused function parameters, useful for catching redundant arguments.
-    "noUnusedParameters": true,
-    // Ensures all switch cases end with a break, return, or throw.
-    // Helps avoid unintended fallthrough logic.
-    "noFallthroughCasesInSwitch": true,
-    // Prevents importing modules that perform side effects without explicitly using them.
-    // Helps avoid issues where importing a file accidentally executes code.
-    "noUncheckedSideEffectImports": true,
-    // -> not sure if needed
 
-    /* My additions: */
-    // Ensures that file imports in your TypeScript code use the same casing as the actual file names on disk.
-    "forceConsistentCasingInFileNames": true,
-    // Fixes module import issues between CommonJS and ESM.
-    "esModuleInterop": true,
-    // Lets you import CommonJS modules using ES module default import syntax.
-    "allowSyntheticDefaultImports": true,
-    // Allow importing JSON
-    "resolveJsonModule": true,
-    "paths": {
-      "@mui/styled-engine": [
-        "./node_modules/@mui/styled-engine-sc"
-      ]
-    }
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": false,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true
   },
-  // Only compiles files inside the src/ folder, preventing TypeScript from checking other directories (like node_modules or dist).
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }

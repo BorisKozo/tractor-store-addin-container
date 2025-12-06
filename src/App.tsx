@@ -9,13 +9,9 @@ import { BoundaryToggle } from './common/BoundaryToggle.tsx';
 initializeModules();
 globalAddinContainer.start();
 
-const routeAddins = globalAddinContainer.get(routesAddinPath);
-const routes = routeAddins.map((route: { path: string; Component: React.ComponentType }) => ({
-    path: route.path,
-    element: React.createElement(route.Component),
-}));
+const routeAddins: { path: string; Component: React.FC }[] = globalAddinContainer.get(routesAddinPath);
 
-const router = createBrowserRouter(routes);
+const router = createBrowserRouter(routeAddins);
 
 function App() {
     return (
