@@ -1,38 +1,55 @@
 # AddinContainer
 
-The addin container provides a facility for distributed configuration of the application.
-It does not provide state management and should not be used for this purpose!
+## Overview
 
-### Usage
+The AddinContainer provides a facility for distributed application configuration through a decentralized, path-based registry system. It is designed exclusively for configuration purposes and should not be used for state management.
 
-The addin container stores elements of `Addin<T>` type in buckets arranged in a tree like manner.
-Each `Addin<T>` must have a unique _id_ for the specific path where this addin is being added,
-and _content_ which is the data that the addin stores. The content must be either an object or a function
-(it cannot be a primitive value). In general, most of the time you will only need to worry about
-the content of the addins.
+## Core Concepts
 
-When adding an addin to the container you must specify the _path_ to which the addin will be added.
-Note that you can only add during the initialization stage and once the system is initialized you should
-not add additional addins. This is not enforced in the current implementation but may be in the future.
-The _path_ to which you add the addin consists of words seperated by '.' (you should stick to alphanumeric
-characters when creating the path). There are helper functions to help you build the path from the parts
-but most likely the path will be defined for you in some const that you will just use.
+### Architecture
 
-Each such _path_ is a contract between a configuration producer and a configuration consumer (similar to the
-pub-sub pattern). For example, the main menu may define a certain path where the producers can add their
-menu items. Once the application is initialized the menu will read this path and build the menu. The menu
-doesn't care who added the addins as long as the content is of the correct type (the type is not enforced in any way
-because JavaScript).
+The AddinContainer organizes configuration elements in a hierarchical tree structure. Each element is stored as an `Addin<T>` type within path-based buckets, enabling modular and distributed configuration across the application.
 
-#### globalAddinContainer
+### Addin Structure
 
-While you can create as many instances of the addin container as you want, there is one instance called
-`globalAddinContainer` which should be used throughout the entire system. You should always consume
-the addins from this singleton.
+Each `Addin<T>` consists of two required properties:
 
-#### Services
+- **id**: A unique identifier within the specific path where the addin is registered
+- **content**: The configuration data, which must be either an object or a function (primitive values are not supported)
 
-Services are helper classes that encapsulate some functionality under a single class.
-The AddinContainer encapsulates the addition and retrieval of services.
-Never store state in a service! The services are just a set of functions to interact with
-other elements of the system.
+In most use cases, you will primarily interact with the `content` property of addins.
+
+## Usage
+
+### Adding Addins
+
+Addins must be registered during the application initialization phase by specifying a target path. While the current implementation does not enforce this restriction, adding addins after initialization is not supported and may be prohibited in future versions.
+
+#### Path Convention
+
+Paths consist of alphanumeric segments separated by dots (`.`), forming a hierarchical structure (e.g., `menu.main.items`). While helper functions exist for path construction, paths are typically predefined as constants for consistency.
+
+**Best Practice**: Use predefined path constants rather than constructing paths manually.
+
+### Configuration Contract Pattern
+
+Each path represents a contract between configuration producers and consumers, following a publish-subscribe pattern:
+
+1. **Producers** register addins at predefined paths during initialization
+2. **Consumers** retrieve and process addins from those paths after initialization
+
+**Example**: A main menu component defines a path (e.g., `menu.main.items`) where feature modules can register menu items. After initialization, the menu component reads all addins at that path to construct the interface. The consumer remains agnostic to the producers' identities, requiring only that content conforms to the expected type.
+
+**Note**: Type enforcement is not implemented due to JavaScript's dynamic nature. Adherence to type contracts is the responsibility of producers and consumers.
+
+## Global Instance
+
+### globalAddinContainer
+
+While multiple AddinContainer instances can be created, the application should use the singleton `globalAddinContainer` instance system-wide. All addin consumption should reference this global instance to ensure consistency.
+
+## Services
+
+Services are utility classes that encapsulate specific functionality within a cohesive interface. The AddinContainer provides dedicated methods for registering and retrieving services.
+
+**Important**: Services must remain stateless. They should only expose functions for interacting with other system components and should never maintain internal state.
