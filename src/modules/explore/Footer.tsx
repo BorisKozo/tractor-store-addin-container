@@ -31,7 +31,7 @@ const Footer: React.FC = () => {
                         <p>SPA, Vite, Addin Container, React, </p>
                         <p>
                             built by{' '}
-                            <a href='https://' target='_blank'>
+                            <a href='https://github.com/BorisKozo' target='_blank'>
                                 Boris Kozo
                             </a>{' '}
                             With{' '}
